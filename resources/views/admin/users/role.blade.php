@@ -1,14 +1,23 @@
 <x-admin-layout>
-    <div>Name: {{$user->name}}</div>
-    <div>Email: {{$user->email}}</div>
+    <div style="width: 300px;">
+        <div style="background-color: #d2d2d2; border-radius: 12px;" class="p-3">
+            <div>Name: <span style="font-weight: bold;">{{$user->name}}</span></div>
+            <div>Email: <span style="font-weight: bold;">{{$user->email}}</span></div>
+        </div>
+    
 
-            <h1 style="font-size: 30px; margin-bottom: 10px;">Roles</h1>
+        <h1 style="font-size: 30px; margin-bottom: 10px;">Roles</h1>
         @if ($user->roles)
             @foreach ($user->roles as $user_role)
                 <form method="POST" action="{{route('admin.users.roles.remove', [$user->id, $user_role->id])}}" onsubmit="return confirm('Are you sure?');">
                     @csrf
                     @method('DELETE')    
-                    <button type="submit" class="inline-flex space-x-2 items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 focus:outline-none focus:text-red-800 disabled:opacity-50 disabled:pointer-events-none">{{ $user_role->name }}</button>
+                    <button style="background-color: red; color: white; margin-bottom: 10px;" type="submit" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium">
+                        {{ $user_role->name }}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </form>
             @endforeach
         @endif
@@ -31,7 +40,12 @@
                 <form method="POST" action="{{route('admin.users.permissions.revoke', [$user->id, $user_permission->id])}}" onsubmit="return confirm('Are you sure?');">
                     @csrf
                     @method('DELETE')    
-                    <button type="submit" class="inline-flex space-x-2 items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 focus:outline-none focus:text-red-800 disabled:opacity-50 disabled:pointer-events-none">{{ $user_permission->name }}</button>
+                    <button style="background-color: red; color: white; margin-bottom: 10px;" type="submit" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium">
+                        {{ $user_permission->name }}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </form>
             @endforeach
         @endif
@@ -50,6 +64,7 @@
         </form>
         
 
+    </div>
     </div>
     @error('name')
         <span style="color: red" class="text-sm">

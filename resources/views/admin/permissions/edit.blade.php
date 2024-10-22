@@ -19,7 +19,12 @@
                 <form method="POST" action="{{route('admin.permissions.roles.remove', [$permission->id, $permission_role->id])}}" onsubmit="return confirm('Are you sure?');">
                     @csrf
                     @method('DELETE')    
-                    <button type="submit" class="inline-flex space-x-2 items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 focus:outline-none focus:text-red-800 disabled:opacity-50 disabled:pointer-events-none">{{ $permission_role->name }}</button>
+                    <button style="background-color: red; color: white; margin-bottom: 10px;" type="submit" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium">
+                        {{ $permission_role->name }}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </form>
             @endforeach
         @endif
@@ -43,7 +48,5 @@
             {{ $message }}
         </span>
     @enderror
-    <div class="flex justify-end pb-3">
-        <a style="background-color: gray;" href="{{route('admin.permissions.index')}}" class="px-4 py-2 text-white rounded-md"><</a>
-    </div>
+   
 </x-admin-layout>

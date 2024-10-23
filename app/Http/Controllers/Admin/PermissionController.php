@@ -29,7 +29,7 @@ class PermissionController extends Controller
 
     public function edit(Permission $permission)
     {
-        $roles = Role::all();
+        $roles = Role::whereNotIn('name', ['admin'])->get();
         return view('admin.permissions.edit', compact('permission', 'roles'));
     }
 
@@ -48,6 +48,9 @@ class PermissionController extends Controller
 
     public function assignRole(Request $request, Permission $permission)
     {
+        if ($request->role === 'admin') {
+            return back()->with('message', 'You cannot assign the admin role.');
+        }
         if($permission->hasRole($request->role)){
             return back()->with('message', 'Role exists');
         }
@@ -57,6 +60,10 @@ class PermissionController extends Controller
 
     public function removeRole(Permission $permission, Role $role)
     {
+        if ($role->name === 'admin') {
+            return back()->with('message', 'You cannot remove the admin role.');
+        }
+
         if($permission->hasRole($role)){
             $permission->removeRole($role);
             return back()->with('message', 'Role removed successfully');

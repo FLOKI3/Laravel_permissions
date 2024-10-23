@@ -16,7 +16,7 @@ class RoleController extends Controller
     public function index() 
     {
         $permissions = Permission::all();
-        $roles = Role::whereNotIn('name', ['admin'])->get();
+        $roles = Role::all();
         return view('admin.roles.index', compact('roles', 'permissions'));
     }
 
@@ -34,6 +34,9 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
+        if ($role->name === 'admin') {
+            return back()->with('message', 'You cannot edit the admin role.');
+        }
         $permissions = Permission::all();
         return view('admin.roles.edit', compact('role', 'permissions'));
 
@@ -48,6 +51,9 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
+        if ($role->name === 'admin') {
+            return back()->with('message', 'You cannot remove the admin role.');
+        }
         $role->delete();
         return back()->with('message', 'Role deleted successfully');
     }

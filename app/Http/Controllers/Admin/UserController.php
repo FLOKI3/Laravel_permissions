@@ -41,31 +41,5 @@ class UserController extends Controller
         }
         return back()->with('message', 'Role not exists');
     }
-
-    public function givePermission(Request $request, User $user)
-    {
-        if($user->hasPermissionTo($request->permission)){
-            return back()->with('message', 'Permission exists');
-        }
-        $user->givePermissionTo($request->permission);
-        return back()->with('message', 'Permission added successfully');
-    }
-
-    public function revokePermission(User $user, Permission $permission)
-    {
-        if($user->hasPermissionTo($permission)){
-            $user->revokePermissionTo($permission);
-            return back()->with('message', 'Permission revoked successfully');
-        }
-        return back()->with('message', 'User did not have this permission');
-    }
-
-    public function destroy(User $user)
-    {   
-        if($user->hasRole('admin')){
-            return back()->with('message', 'You are admin');
-        }
-        $user->delete();
-        return back()->with('message', 'User deleted');
-    }
+    
 }
